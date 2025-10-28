@@ -26,11 +26,16 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 18),
-        child: Column(
-          children: [
-            IconCard(),
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 65),
+        child: GridView.builder(
+          clipBehavior: Clip.none,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // number of columns on the screen
+              mainAxisSpacing: 50, // Y axis
+              crossAxisSpacing: 10, // X axis
+              childAspectRatio: 1.6,  // width to height
+              ),
+          itemBuilder: (context, index) => IconCard(),
         ),
       ),
     );

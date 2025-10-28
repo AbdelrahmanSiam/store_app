@@ -7,11 +7,8 @@ class IconCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
-      alignment: AlignmentDirectional.topCenter,
       children: [
         Container(
-          width: 180,
-          height: 120,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -33,6 +30,9 @@ class IconCard extends StatelessWidget {
                     "Dress",
                     style: TextStyle(color: Colors.grey),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   Row(
                     children: [
                       Text("\$87"), // or Text(r"@85")
@@ -49,11 +49,15 @@ class IconCard extends StatelessWidget {
           ),
         ),
         Positioned(
+          right: 15,
           bottom: 50,
-          child: Image.asset(
-            "assets/dress.jpeg",
-            height: 100,
-            width: 100,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              "assets/dress.jpeg",
+              height: 100,
+              width: 100,
+            ),
           ),
         ),
       ],
