@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/widgets/icon_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -6,6 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -22,6 +24,14 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
         ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 18),
+        child: Column(
+          children: [
+            IconCard(),
+          ],
+        ),
       ),
     );
   }
