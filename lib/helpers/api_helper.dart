@@ -4,7 +4,11 @@ import 'package:http/http.dart' as http;
 
 class ApiHelper {
   // public get function
-  Future<dynamic> get({required String url}) async {
+  Future<dynamic> get({required String url, @required String ? token}) async {
+    Map<String , String> headers ={};
+    if(token != null){
+      headers.addAll({'Authorization':'Bearer $token'});
+    }
     http.Response response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -34,11 +38,11 @@ class ApiHelper {
   }
 
   // public put method
-  Future<dynamic> put({required String url,@required dynamic body , @required Stirng? token})async{
-    Map<String,dynamic> headers = {};
-    headers.addAll('Content-Type':'application/x-www-form-urlencoded');
+  Future<dynamic> put({required String url,@required dynamic body , @required String? token})async{
+    Map<String,String> headers = {};
+    headers.addAll({'Content-Type':'application/x-www-form-urlencoded'});
     if(token !=null){
-      headers.addAll('Barer $token');
+      headers.addAll({'Authorization':'Bearer $token'});
     }
     http.Response response = await http.put(Uri.parse(url), body:body , headers : headers);
     if(response.statusCode == 200){
