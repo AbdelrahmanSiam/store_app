@@ -9,9 +9,11 @@ class UpdateProductService {
       required String price,
       required String description,
       required String image,
-      required String category}) async {
+      required String category,
+      required int id}) async {
     Map<String, dynamic> data = await ApiHelper()
-        .put(url: "https://fakestoreapi.com/products/:id", body: {
+        .put(url: "https://fakestoreapi.com/products/$id", body: {
+      "id": id,
       "title": title,
       "price": price,
       "description": description,

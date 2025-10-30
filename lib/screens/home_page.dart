@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/models/product_model.dart';
+import 'package:store_app/services/get_all_product_service.dart';
 import 'package:store_app/widgets/icon_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,18 +28,39 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 65),
-        child: GridView.builder(
-          clipBehavior: Clip.none,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // number of columns on the screen
-              mainAxisSpacing: 50, // Y axis
-              crossAxisSpacing: 10, // X axis
-              childAspectRatio: 1.6,  // width to height
-              ),
-          itemBuilder: (context, index) => IconCard(),
-        ),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 65),
+          child: FutureBuilder(
+            future: GetAllProductService().getAllProduct(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    "Error: ${snapshot.error}",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                List<ProductModel> products =
+                    snapshot.data as List<ProductModel>;
+                return GridView.builder(
+                  clipBehavior: Clip.none,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 50,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 1.6,
+                  ),
+                  itemBuilder: (context, index) =>
+                      IconCard(product: products[index]),
+                  itemCount: products.length,
+                );
+              } else {
+                return Center(child: Text("No data"));
+              }
+            },
+          )),
     );
   }
 }
